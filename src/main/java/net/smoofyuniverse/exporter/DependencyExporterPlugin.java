@@ -34,6 +34,8 @@ import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskProvider;
 
 public class DependencyExporterPlugin implements Plugin<Project> {
+	public static final String USER_AGENT = "DependencyExporter";
+
 	@Override
 	public void apply(Project project) {
 		NamedDomainObjectContainer<ExportConfig> configs = project.getObjects().domainObjectContainer(ExportConfig.class);

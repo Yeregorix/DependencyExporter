@@ -44,6 +44,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
@@ -114,12 +115,17 @@ public abstract class ExportTask extends DefaultTask {
 
 				boolean found = false;
 				for (String repoUrl : mavenRepos) {
-					String url = repoUrl + path;
-					try (InputStream st = new URL(url).openStream()) {
+					String urlStr = repoUrl + path;
+
+					URL url = new URL(urlStr);
+					URLConnection co = url.openConnection();
+					co.setRequestProperty("User-Agent", DependencyExporterPlugin.USER_AGENT);
+
+					try (InputStream st = co.getInputStream()) {
 						if (st != null) {
 							found = true;
 							w.name("url");
-							w.value(url);
+							w.value(urlStr);
 							break;
 						}
 					} catch (FileNotFoundException ignored) {
@@ -128,8 +134,8 @@ public abstract class ExportTask extends DefaultTask {
 
 				if (!found) {
 					logger.warn("Artifact URL not found.");
-					logger.warn("Name: " + name);
-					logger.warn("Path: " + path);
+					logger.warn("Name: {}", name);
+					logger.warn("Path: {}", path);
 				}
 
 				Path file = a.getFile().toPath();
