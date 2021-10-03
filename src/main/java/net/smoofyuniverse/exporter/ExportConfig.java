@@ -27,6 +27,7 @@ import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.Property;
+import org.gradle.api.provider.SetProperty;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Nested;
 
@@ -38,6 +39,7 @@ public class ExportConfig implements Named {
 	private final Property<String> path;
 	private final Property<Configuration> config;
 	private final Property<Boolean> skipWhenEmpty;
+	private final SetProperty<String> exclusions;
 	private final NamedDomainObjectContainer<Constraint> constraints;
 
 	@Inject
@@ -47,6 +49,7 @@ public class ExportConfig implements Named {
 		this.path = factory.property(String.class);
 		this.config = factory.property(Configuration.class);
 		this.skipWhenEmpty = factory.property(Boolean.class);
+		this.exclusions = factory.setProperty(String.class);
 		this.constraints = factory.domainObjectContainer(Constraint.class);
 
 		this.skipWhenEmpty.convention(false);
@@ -85,17 +88,26 @@ public class ExportConfig implements Named {
 		this.skipWhenEmpty.set(value);
 	}
 
+	@Input
+	public SetProperty<String> getExclusions() {
+		return this.exclusions;
+	}
+
+	public void exclude(String... classifiers) {
+		this.exclusions.addAll(classifiers);
+	}
+
 	@Nested
 	public NamedDomainObjectContainer<Constraint> getConstraints() {
 		return this.constraints;
 	}
 
-	public void constraint(String name, Iterable<? extends String> systems) {
-		constraint(name, systems, null);
+	public void constraint(String classifier, Iterable<? extends String> systems) {
+		constraint(classifier, systems, null);
 	}
 
-	public void constraint(String name, Iterable<? extends String> systems, Iterable<? extends String> archs) {
-		Constraint constraint = new Constraint(name, this.factory);
+	public void constraint(String classifier, Iterable<? extends String> systems, Iterable<? extends String> archs) {
+		Constraint constraint = new Constraint(classifier, this.factory);
 		constraint.setSystems(systems);
 		constraint.setArchs(archs);
 		this.constraints.add(constraint);

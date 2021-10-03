@@ -27,7 +27,6 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.DomainObjectCollection;
 import org.gradle.api.NamedDomainObjectCollection;
 import org.gradle.api.artifacts.ResolvedArtifact;
-import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.ArtifactRepository;
@@ -51,6 +50,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public abstract class ExportTask extends DefaultTask {
 	private static final Logger logger = Logging.getLogger(ExportTask.class);
@@ -62,13 +62,19 @@ public abstract class ExportTask extends DefaultTask {
 		RepositoryHandler repos = getProject().getRepositories();
 
 		for (ExportConfig config : getConfigurations()) {
-			ResolvedConfiguration deps = config.getConfig().get().getResolvedConfiguration();
+			Set<String> exclusions = config.getExclusions().get();
+			List<ResolvedArtifact> artifacts = new ArrayList<>();
 			Path destination = dir.resolve(config.getPath().get());
 
-			if (deps.getResolvedArtifacts().isEmpty() && config.getSkipWhenEmpty().get())
+			for (ResolvedArtifact a : config.getConfig().get().getResolvedConfiguration().getResolvedArtifacts()) {
+				if (!exclusions.contains(a.getClassifier()))
+					artifacts.add(a);
+			}
+
+			if (artifacts.isEmpty() && config.getSkipWhenEmpty().get())
 				Files.deleteIfExists(destination);
 			else
-				generate(repos, deps, destination, config.getConstraints());
+				generate(repos, artifacts, destination, config.getConstraints());
 		}
 	}
 
@@ -78,7 +84,7 @@ public abstract class ExportTask extends DefaultTask {
 	@Nested
 	public abstract DomainObjectCollection<ExportConfig> getConfigurations();
 
-	public static void generate(RepositoryHandler repos, ResolvedConfiguration deps, Path destination, NamedDomainObjectCollection<Constraint> constraints) throws Exception {
+	public static void generate(Iterable<ArtifactRepository> repos, Iterable<ResolvedArtifact> artifacts, Path destination, NamedDomainObjectCollection<Constraint> constraints) throws Exception {
 		List<String> mavenRepos = new ArrayList<>();
 		for (ArtifactRepository repo : repos) {
 			if (repo instanceof MavenArtifactRepository) {
@@ -95,7 +101,7 @@ public abstract class ExportTask extends DefaultTask {
 			w.setIndent("  ");
 			w.beginArray();
 
-			for (ResolvedArtifact a : deps.getResolvedArtifacts()) {
+			for (ResolvedArtifact a : artifacts) {
 				ModuleComponentIdentifier c = (ModuleComponentIdentifier) a.getId().getComponentIdentifier();
 
 				String name = c.toString();
