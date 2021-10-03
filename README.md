@@ -29,6 +29,8 @@ dependencyExport {
     javafx {
         path = "dep/javafx.json"
         config = configurations.javaFXRuntime
+        
+        // shortcut: presetOpenJFX()
         constraint("win", ["windows"], ["x64"])
         constraint("win-x86", ["windows"], ["x86"])
         constraint("mac", ["macos"], ["x64"])

@@ -32,6 +32,7 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Nested;
 
 import javax.inject.Inject;
+import java.util.Collections;
 
 public class ExportConfig implements Named {
 	private final ObjectFactory factory;
@@ -102,8 +103,22 @@ public class ExportConfig implements Named {
 		return this.constraints;
 	}
 
+	public void constraint(String classifier, String system) {
+		constraint(classifier, Collections.singleton(system));
+	}
+
 	public void constraint(String classifier, Iterable<? extends String> systems) {
 		constraint(classifier, systems, null);
+	}
+
+	public void presetOpenJFX() {
+		constraint("win", "windows", "x64");
+		constraint("win-x86", "windows", "x86");
+		constraint("mac", "macos", "x64");
+		constraint("mac-aarch64", "macos", "arm64");
+		constraint("linux", "linux", "x64");
+		constraint("linux-aarch64", "linux", "arm64");
+		constraint("linux-arm32-monocle", "linux", "arm32");
 	}
 
 	public void constraint(String classifier, Iterable<? extends String> systems, Iterable<? extends String> archs) {
@@ -111,5 +126,9 @@ public class ExportConfig implements Named {
 		constraint.setSystems(systems);
 		constraint.setArchs(archs);
 		this.constraints.add(constraint);
+	}
+
+	public void constraint(String classifier, String system, String arch) {
+		constraint(classifier, Collections.singleton(system), Collections.singleton(arch));
 	}
 }
