@@ -90,6 +90,10 @@ public class ExportConfig implements Named {
 		return this.constraints;
 	}
 
+	public void constraint(String name, Iterable<? extends String> systems) {
+		constraint(name, systems, null);
+	}
+
 	public void constraint(String name, Iterable<? extends String> systems, Iterable<? extends String> archs) {
 		Constraint constraint = new Constraint(name, this.factory);
 		constraint.setSystems(systems);

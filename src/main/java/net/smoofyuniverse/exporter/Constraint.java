@@ -26,6 +26,7 @@ import org.gradle.api.Named;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Optional;
 
 import javax.inject.Inject;
 
@@ -48,6 +49,7 @@ public class Constraint implements Named {
 	}
 
 	@Input
+	@Optional
 	public ListProperty<String> getSystems() {
 		return this.systems;
 	}
@@ -57,6 +59,7 @@ public class Constraint implements Named {
 	}
 
 	@Input
+	@Optional
 	public ListProperty<String> getArchs() {
 		return this.archs;
 	}
