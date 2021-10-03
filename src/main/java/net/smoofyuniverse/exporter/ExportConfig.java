@@ -131,4 +131,10 @@ public class ExportConfig implements Named {
 	public void constraint(String classifier, String system, String arch) {
 		constraint(classifier, Collections.singleton(system), Collections.singleton(arch));
 	}
+
+	public void removeConstraint(String classifier) {
+		Constraint constraint = this.constraints.findByName(classifier);
+		if (constraint != null)
+			this.constraints.remove(constraint);
+	}
 }
