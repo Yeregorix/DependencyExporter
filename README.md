@@ -15,10 +15,15 @@ classifier are automatically recognised, and data about system and architecture 
 #### Configuration
 
 ```groovy
+plugins {
+    id 'net.smoofyuniverse.dependency-exporter' version '1.0.2'
+}
+
 dependencyExport {
     loggerImpl {
         path = "dep/logger.json"
         config = configurations.loggerImpl
+        skipWhenEmpty = true
     }
 
     javafx {
