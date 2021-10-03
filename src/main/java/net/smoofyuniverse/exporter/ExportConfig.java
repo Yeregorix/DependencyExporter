@@ -37,6 +37,7 @@ public class ExportConfig implements Named {
 	private final String name;
 	private final Property<String> path;
 	private final Property<Configuration> config;
+	private final Property<Boolean> skipWhenEmpty;
 	private final NamedDomainObjectContainer<Constraint> constraints;
 
 	@Inject
@@ -45,7 +46,10 @@ public class ExportConfig implements Named {
 		this.name = name;
 		this.path = factory.property(String.class);
 		this.config = factory.property(Configuration.class);
+		this.skipWhenEmpty = factory.property(Boolean.class);
 		this.constraints = factory.domainObjectContainer(Constraint.class);
+
+		this.skipWhenEmpty.convention(false);
 	}
 
 	@Override
@@ -70,6 +74,15 @@ public class ExportConfig implements Named {
 
 	public void setConfig(Configuration value) {
 		this.config.set(value);
+	}
+
+	@Input
+	public Property<Boolean> getSkipWhenEmpty() {
+		return this.skipWhenEmpty;
+	}
+
+	public void setSkipWhenEmpty(boolean value) {
+		this.skipWhenEmpty.set(value);
 	}
 
 	@Nested

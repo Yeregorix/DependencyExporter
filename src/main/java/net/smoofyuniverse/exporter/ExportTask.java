@@ -62,7 +62,13 @@ public abstract class ExportTask extends DefaultTask {
 		RepositoryHandler repos = getProject().getRepositories();
 
 		for (ExportConfig config : getConfigurations()) {
-			generate(repos, config.getConfig().get().getResolvedConfiguration(), dir.resolve(config.getPath().get()), config.getConstraints());
+			ResolvedConfiguration deps = config.getConfig().get().getResolvedConfiguration();
+			Path destination = dir.resolve(config.getPath().get());
+
+			if (deps.getResolvedArtifacts().isEmpty() && config.getSkipWhenEmpty().get())
+				Files.deleteIfExists(destination);
+			else
+				generate(repos, deps, destination, config.getConstraints());
 		}
 	}
 
