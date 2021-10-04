@@ -40,21 +40,17 @@ import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public abstract class ExportTask extends DefaultTask {
 	private static final Logger logger = Logging.getLogger(ExportTask.class);
-	private static final char[] hexchars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
 	@TaskAction
 	public void generate() throws Exception {
@@ -154,7 +150,7 @@ public abstract class ExportTask extends DefaultTask {
 				w.name("size");
 				w.value(Files.size(file));
 				w.name("digest");
-				w.value(toHexString(digest(file)));
+				w.value(Util.toHexString(Util.digest(file)));
 
 				if (classifier != null) {
 					Constraint constraint = constraints.findByName(classifier);
@@ -183,24 +179,6 @@ public abstract class ExportTask extends DefaultTask {
 			}
 
 			w.endArray();
-		}
-	}
-
-	public static String toHexString(byte[] bytes) {
-		StringBuilder s = new StringBuilder(bytes.length * 2);
-		for (byte b : bytes)
-			s.append(hexchars[(b & 0xF0) >> 4]).append(hexchars[b & 0x0F]);
-		return s.toString();
-	}
-
-	public static byte[] digest(Path file) throws IOException, NoSuchAlgorithmException {
-		MessageDigest md = MessageDigest.getInstance("sha1");
-		try (InputStream in = Files.newInputStream(file)) {
-			byte[] buffer = new byte[4096];
-			int len;
-			while ((len = in.read(buffer)) != -1)
-				md.update(buffer, 0, len);
-			return md.digest();
 		}
 	}
 }
