@@ -16,7 +16,7 @@ classifier are automatically recognised, and data about system and architecture 
 
 ```groovy
 plugins {
-    id 'net.smoofyuniverse.dependency-exporter' version '1.0.4'
+    id 'net.smoofyuniverse.dependency-exporter' version '1.0.5'
 }
 
 dependencyExport {
