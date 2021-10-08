@@ -27,6 +27,7 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.DomainObjectCollection;
 import org.gradle.api.NamedDomainObjectCollection;
 import org.gradle.api.artifacts.ResolvedArtifact;
+import org.gradle.api.artifacts.component.ComponentIdentifier;
 import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.ArtifactRepository;
@@ -98,7 +99,11 @@ public abstract class ExportTask extends DefaultTask {
 			w.beginArray();
 
 			for (ResolvedArtifact a : artifacts) {
-				ModuleComponentIdentifier c = (ModuleComponentIdentifier) a.getId().getComponentIdentifier();
+				ComponentIdentifier id = a.getId().getComponentIdentifier();
+				if (!(id instanceof ModuleComponentIdentifier))
+					continue;
+
+				ModuleComponentIdentifier c = (ModuleComponentIdentifier) id;
 
 				String name = c.toString();
 				String path = c.getGroup().replace('.', '/') + "/" + c.getModule() + "/" + c.getVersion() + "/" + c.getModule() + "-";
