@@ -46,24 +46,24 @@ dependencyExport {
 
 ```json
 [
-  {
-    "name": "org.apache.logging.log4j:log4j-slf4j-impl:2.14.1",
-    "url": "https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-slf4j-impl/2.14.1/log4j-slf4j-impl-2.14.1.jar",
-    "size": 23625,
-    "digest": "9a40554b8dab7ac9606089c87ae8a5ba914ec932"
-  },
-  {
-    "name": "org.apache.logging.log4j:log4j-core:2.14.1",
-    "url": "https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-core/2.14.1/log4j-core-2.14.1.jar",
-    "size": 1745700,
-    "digest": "9141212b8507ab50a45525b545b39d224614528b"
-  },
-  {
-    "name": "org.apache.logging.log4j:log4j-api:2.14.1",
-    "url": "https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-api/2.14.1/log4j-api-2.14.1.jar",
-    "size": 300365,
-    "digest": "cd8858fbbde69f46bce8db1152c18a43328aae78"
-  }
+    {
+        "name": "org.apache.logging.log4j:log4j-slf4j-impl:2.17.1",
+        "url": "https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-slf4j-impl/2.17.1/log4j-slf4j-impl-2.17.1.jar",
+        "size": 24279,
+        "digest": "84692d456bcce689355d33d68167875e486954dd"
+    },
+    {
+        "name": "org.apache.logging.log4j:log4j-core:2.17.1",
+        "url": "https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-core/2.17.1/log4j-core-2.17.1.jar",
+        "size": 1790452,
+        "digest": "779f60f3844dadc3ef597976fcb1e5127b1f343d"
+    },
+    {
+        "name": "org.apache.logging.log4j:log4j-api:2.17.1",
+        "url": "https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-api/2.17.1/log4j-api-2.17.1.jar",
+        "size": 301872,
+        "digest": "d771af8e336e372fb5399c99edabe0919aeaf5b2"
+    }
 ]
 ```
 
@@ -71,53 +71,65 @@ dependencyExport {
 
 ```json
 [
-  {
-    "name": "org.openjfx:javafx-base:17:linux",
-    "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/17/javafx-base-17-linux.jar",
-    "size": 745750,
-    "digest": "476c7640c2320244d3156edbbc19a7eda275c1ed",
-    "systems": [
-      "linux"
-    ],
-    "archs": [
-      "x64"
-    ]
-  },
-  {
-    "name": "org.openjfx:javafx-base:17:linux-aarch64",
-    "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/17/javafx-base-17-linux-aarch64.jar",
-    "size": 745749,
-    "digest": "b62b6cae95847fda1dce4a8a29edcf8a31b85333",
-    "systems": [
-      "linux"
-    ],
-    "archs": [
-      "arm64"
-    ]
-  },
-  {
-    "name": "org.openjfx:javafx-base:17:mac",
-    "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/17/javafx-base-17-mac.jar",
-    "size": 745746,
-    "digest": "61d52392b063be78f7cc1b0fbfc04dda7a835a15",
-    "systems": [
-      "macos"
-    ],
-    "archs": [
-      "x64"
-    ]
-  },
-  {
-    "name": "org.openjfx:javafx-base:17:win",
-    "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/17/javafx-base-17-win.jar",
-    "size": 745751,
-    "digest": "b63b9696f73009ca5002f49ec4db73576e2de168",
-    "systems": [
-      "windows"
-    ],
-    "archs": [
-      "x64"
-    ]
-  }
+    {
+        "name": "org.openjfx:javafx-base:21.0.1:linux",
+        "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/21.0.1/javafx-base-21.0.1-linux.jar",
+        "size": 754325,
+        "digest": "76f2c504904f96208026fde914701001a668716e",
+        "systems": [
+            "linux"
+        ],
+        "archs": [
+            "x64"
+        ]
+    },
+    {
+        "name": "org.openjfx:javafx-base:21.0.1:linux-aarch64",
+        "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/21.0.1/javafx-base-21.0.1-linux-aarch64.jar",
+        "size": 754326,
+        "digest": "e8d960421a991229e373a417a1202da19b1782d8",
+        "systems": [
+            "linux"
+        ],
+        "archs": [
+            "arm64"
+        ]
+    },
+    {
+        "name": "org.openjfx:javafx-base:21.0.1:mac",
+        "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/21.0.1/javafx-base-21.0.1-mac.jar",
+        "size": 754326,
+        "digest": "a2fdc6292a7727a389dc41d42dd1a86040ee7625",
+        "systems": [
+            "macos"
+        ],
+        "archs": [
+            "x64"
+        ]
+    },
+    {
+        "name": "org.openjfx:javafx-base:21.0.1:mac-aarch64",
+        "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/21.0.1/javafx-base-21.0.1-mac-aarch64.jar",
+        "size": 754326,
+        "digest": "d9e58df4eb0c61e90165665c404d2f51ea39408b",
+        "systems": [
+            "macos"
+        ],
+        "archs": [
+            "arm64"
+        ]
+    },
+    {
+        "name": "org.openjfx:javafx-base:21.0.1:win",
+        "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/21.0.1/javafx-base-21.0.1-win.jar",
+        "size": 754326,
+        "digest": "0adb6ee2aa7dff77286a0673dd0c001e318e7224",
+        "systems": [
+            "windows"
+        ],
+        "archs": [
+            "x64"
+        ]
+    }
 ]
 ```
