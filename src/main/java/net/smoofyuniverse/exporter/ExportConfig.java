@@ -113,12 +113,10 @@ public class ExportConfig implements Named {
 
 	public void presetOpenJFX() {
 		constraint("win", "windows", "x64");
-		constraint("win-x86", "windows", "x86");
 		constraint("mac", "macos", "x64");
 		constraint("mac-aarch64", "macos", "arm64");
 		constraint("linux", "linux", "x64");
 		constraint("linux-aarch64", "linux", "arm64");
-		constraint("linux-arm32-monocle", "linux", "arm32");
 	}
 
 	public void constraint(String classifier, Iterable<? extends String> systems, Iterable<? extends String> archs) {
