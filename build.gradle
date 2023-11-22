@@ -16,8 +16,8 @@ java {
     withSourcesJar()
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = "utf-8"
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
 }
 
 gradlePlugin {
@@ -62,7 +62,7 @@ publishing {
             pom {
                 name = 'DependencyExporter'
                 packaging = 'jar'
-                description = "Export Gradle dependencies to JSON file."
+                description = 'Export Gradle dependencies to JSON file.'
                 url = 'https://github.com/Yeregorix/DependencyExporter'
 
                 scm {
@@ -92,8 +92,8 @@ publishing {
     repositories {
         maven {
             url = version.endsWith('SNAPSHOT') ?
-                    "https://oss.sonatype.org/content/repositories/snapshots/"
-                    : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                    'https://oss.sonatype.org/content/repositories/snapshots/'
+                    : 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
 
             credentials {
                 username findProperty('ossrhUsername')
@@ -103,7 +103,7 @@ publishing {
     }
 }
 
-if (project.hasProperty("signing.keyId")) {
+if (project.hasProperty('signing.keyId')) {
     apply plugin: 'signing'
     signing {
         sign publishing.publications.mavenJava
