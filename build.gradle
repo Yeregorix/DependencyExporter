@@ -1,7 +1,7 @@
 plugins {
     id 'java-gradle-plugin'
     id 'maven-publish'
-    id 'com.gradle.plugin-publish' version '0.16.0'
+    id 'com.gradle.plugin-publish' version '1.2.1'
     id 'com.diffplug.spotless' version '6.13.0'
 }
 
@@ -54,36 +54,30 @@ spotless {
 }
 
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifactId = 'dependency-exporter'
-            from components.java
+    publications.withType(MavenPublication).configureEach {
+        pom {
+            name = 'DependencyExporter'
+            description = 'Export Gradle dependencies to JSON file.'
+            url = 'https://github.com/Yeregorix/DependencyExporter'
 
-            pom {
-                name = 'DependencyExporter'
-                packaging = 'jar'
-                description = 'Export Gradle dependencies to JSON file.'
+            scm {
+                connection = 'scm:git:https://github.com/Yeregorix/DependencyExporter.git'
+                developerConnection = 'scm:git:https://github.com/Yeregorix/DependencyExporter.git'
                 url = 'https://github.com/Yeregorix/DependencyExporter'
+            }
 
-                scm {
-                    connection = 'scm:git:https://github.com/Yeregorix/DependencyExporter.git'
-                    developerConnection = 'scm:git:https://github.com/Yeregorix/DependencyExporter.git'
-                    url = 'https://github.com/Yeregorix/DependencyExporter'
+            licenses {
+                license {
+                    name = 'MIT License'
+                    url = 'https://opensource.org/licenses/MIT'
                 }
+            }
 
-                licenses {
-                    license {
-                        name = 'MIT License'
-                        url = 'https://opensource.org/licenses/MIT'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id = 'Yeregorix'
-                        name = 'Hugo Dupanloup'
-                        email = 'yeregorix@smoofyuniverse.net'
-                    }
+            developers {
+                developer {
+                    id = 'Yeregorix'
+                    name = 'Hugo Dupanloup'
+                    email = 'yeregorix@smoofyuniverse.net'
                 }
             }
         }
@@ -106,6 +100,6 @@ publishing {
 if (project.hasProperty('signing.keyId')) {
     apply plugin: 'signing'
     signing {
-        sign publishing.publications.mavenJava
+        sign publishing.publications
     }
 }
