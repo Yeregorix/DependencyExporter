@@ -39,8 +39,8 @@ public class Util {
 		return s.toString();
 	}
 
-	public static byte[] digest(Path file) throws IOException, NoSuchAlgorithmException {
-		MessageDigest md = MessageDigest.getInstance("sha1");
+	public static byte[] digest(Path file, String algorithm) throws IOException, NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance(algorithm);
 		try (InputStream in = Files.newInputStream(file)) {
 			byte[] buffer = new byte[4096];
 			int len;

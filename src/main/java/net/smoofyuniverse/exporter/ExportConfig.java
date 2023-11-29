@@ -38,8 +38,10 @@ public class ExportConfig implements Named {
 	private final ObjectFactory factory;
 	private final String name;
 	private final Property<String> path;
+	private final Property<String> digestAlgorithm;
 	private final Property<Configuration> config;
 	private final Property<Boolean> skipWhenEmpty;
+	private final Property<Boolean> writeDigestAlgorithm;
 	private final SetProperty<String> exclusions;
 	private final NamedDomainObjectContainer<Constraint> constraints;
 
@@ -48,12 +50,16 @@ public class ExportConfig implements Named {
 		this.factory = factory;
 		this.name = name;
 		this.path = factory.property(String.class);
+		this.digestAlgorithm = factory.property(String.class);
 		this.config = factory.property(Configuration.class);
 		this.skipWhenEmpty = factory.property(Boolean.class);
+		this.writeDigestAlgorithm = factory.property(Boolean.class);
 		this.exclusions = factory.setProperty(String.class);
 		this.constraints = factory.domainObjectContainer(Constraint.class);
 
+		this.digestAlgorithm.convention("SHA-256");
 		this.skipWhenEmpty.convention(false);
+		this.writeDigestAlgorithm.convention(false);
 	}
 
 	@Override
@@ -72,6 +78,15 @@ public class ExportConfig implements Named {
 	}
 
 	@Input
+	public Property<String> getDigestAlgorithm() {
+		return this.digestAlgorithm;
+	}
+
+	public void setDigestAlgorithm(String value) {
+		this.digestAlgorithm.set(value);
+	}
+
+	@Input
 	public Property<Configuration> getConfig() {
 		return this.config;
 	}
@@ -87,6 +102,15 @@ public class ExportConfig implements Named {
 
 	public void setSkipWhenEmpty(boolean value) {
 		this.skipWhenEmpty.set(value);
+	}
+
+	@Input
+	public Property<Boolean> getWriteDigestAlgorithm() {
+		return this.writeDigestAlgorithm;
+	}
+
+	public void setWriteDigestAlgorithm(boolean value) {
+		this.writeDigestAlgorithm.set(value);
 	}
 
 	@Input

@@ -53,35 +53,8 @@ import java.util.Set;
 public abstract class ExportTask extends DefaultTask {
 	private static final Logger logger = Logging.getLogger(ExportTask.class);
 
-	@TaskAction
-	public void generate() throws Exception {
-		Path dir = getOutputDirectory().get().getAsFile().toPath();
-		RepositoryHandler repos = getProject().getRepositories();
-
-		for (ExportConfig config : getConfigurations()) {
-			Set<String> exclusions = config.getExclusions().get();
-			List<ResolvedArtifact> artifacts = new ArrayList<>();
-			Path destination = dir.resolve(config.getPath().get());
-
-			for (ResolvedArtifact a : config.getConfig().get().getResolvedConfiguration().getResolvedArtifacts()) {
-				if (!exclusions.contains(a.getClassifier()))
-					artifacts.add(a);
-			}
-
-			if (artifacts.isEmpty() && config.getSkipWhenEmpty().get())
-				Files.deleteIfExists(destination);
-			else
-				generate(repos, artifacts, destination, config.getConstraints());
-		}
-	}
-
-	@OutputDirectory
-	public abstract DirectoryProperty getOutputDirectory();
-
-	@Nested
-	public abstract DomainObjectCollection<ExportConfig> getConfigurations();
-
-	public static void generate(Iterable<ArtifactRepository> repos, Iterable<ResolvedArtifact> artifacts, Path destination, NamedDomainObjectCollection<Constraint> constraints) throws Exception {
+	public static void generate(Iterable<ArtifactRepository> repos, Iterable<ResolvedArtifact> artifacts, Path destination,
+								String digestAlgorithm, boolean writeDigestAlgorithm, NamedDomainObjectCollection<Constraint> constraints) throws Exception {
 		List<String> mavenRepos = new ArrayList<>();
 		for (ArtifactRepository repo : repos) {
 			if (repo instanceof MavenArtifactRepository) {
@@ -155,7 +128,12 @@ public abstract class ExportTask extends DefaultTask {
 				w.name("size");
 				w.value(Files.size(file));
 				w.name("digest");
-				w.value(Util.toHexString(Util.digest(file)));
+				w.value(Util.toHexString(Util.digest(file, digestAlgorithm)));
+
+				if (writeDigestAlgorithm) {
+					w.name("digestAlgorithm");
+					w.value(digestAlgorithm);
+				}
 
 				if (classifier != null) {
 					Constraint constraint = constraints.findByName(classifier);
@@ -184,6 +162,35 @@ public abstract class ExportTask extends DefaultTask {
 			}
 
 			w.endArray();
+		}
+	}
+
+	@OutputDirectory
+	public abstract DirectoryProperty getOutputDirectory();
+
+	@Nested
+	public abstract DomainObjectCollection<ExportConfig> getConfigurations();
+
+	@TaskAction
+	public void generate() throws Exception {
+		Path dir = getOutputDirectory().get().getAsFile().toPath();
+		RepositoryHandler repos = getProject().getRepositories();
+
+		for (ExportConfig config : getConfigurations()) {
+			Set<String> exclusions = config.getExclusions().get();
+			List<ResolvedArtifact> artifacts = new ArrayList<>();
+			Path destination = dir.resolve(config.getPath().get());
+
+			for (ResolvedArtifact a : config.getConfig().get().getResolvedConfiguration().getResolvedArtifacts()) {
+				if (!exclusions.contains(a.getClassifier()))
+					artifacts.add(a);
+			}
+
+			if (artifacts.isEmpty() && config.getSkipWhenEmpty().get())
+				Files.deleteIfExists(destination);
+			else
+				generate(repos, artifacts, destination, config.getDigestAlgorithm().get(),
+						config.getWriteDigestAlgorithm().get(), config.getConstraints());
 		}
 	}
 }
