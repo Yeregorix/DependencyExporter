@@ -1,7 +1,7 @@
 # DependencyExporter
 
 DependencyExporter is a Gradle plugin that enables automatic creation of JSON files containing data about your project
-dependencies, such as download URL, size and SHA-1 digest. This is useful for applications that want to download
+dependencies, such as download URL, size and SHA-256 digest. This is useful for applications that want to download
 dependencies at runtime.
 
 ## Configuration
@@ -16,7 +16,7 @@ classifier are automatically recognised, and data about system and architecture 
 
 ```groovy
 plugins {
-    id 'net.smoofyuniverse.dependency-exporter' version '1.0.6'
+    id 'net.smoofyuniverse.dependency-exporter' version '1.0.7'
 }
 
 dependencyExport {
@@ -47,22 +47,22 @@ dependencyExport {
 ```json
 [
     {
-        "name": "org.apache.logging.log4j:log4j-slf4j-impl:2.17.1",
-        "url": "https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-slf4j-impl/2.17.1/log4j-slf4j-impl-2.17.1.jar",
-        "size": 24279,
-        "digest": "84692d456bcce689355d33d68167875e486954dd"
+        "name": "org.apache.logging.log4j:log4j-slf4j-impl:2.17.2",
+        "url": "https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-slf4j-impl/2.17.2/log4j-slf4j-impl-2.17.2.jar",
+        "size": 24248,
+        "digest": "77912d47190a5d25d583728e048496a92a2cb32308b71d3439931d7719996637"
     },
     {
-        "name": "org.apache.logging.log4j:log4j-core:2.17.1",
-        "url": "https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-core/2.17.1/log4j-core-2.17.1.jar",
-        "size": 1790452,
-        "digest": "779f60f3844dadc3ef597976fcb1e5127b1f343d"
+        "name": "org.apache.logging.log4j:log4j-core:2.17.2",
+        "url": "https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-core/2.17.2/log4j-core-2.17.2.jar",
+        "size": 1811089,
+        "digest": "5adb34ff4197cd16a8d24f63035856a933cb59562a6888dde86e9450fcfef646"
     },
     {
-        "name": "org.apache.logging.log4j:log4j-api:2.17.1",
-        "url": "https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-api/2.17.1/log4j-api-2.17.1.jar",
-        "size": 301872,
-        "digest": "d771af8e336e372fb5399c99edabe0919aeaf5b2"
+        "name": "org.apache.logging.log4j:log4j-api:2.17.2",
+        "url": "https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-api/2.17.2/log4j-api-2.17.2.jar",
+        "size": 302511,
+        "digest": "09351b5a03828f369cdcff76f4ed39e6a6fc20f24f046935d0b28ef5152f8ce4"
     }
 ]
 ```
@@ -75,7 +75,7 @@ dependencyExport {
         "name": "org.openjfx:javafx-base:21.0.1:linux",
         "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/21.0.1/javafx-base-21.0.1-linux.jar",
         "size": 754325,
-        "digest": "76f2c504904f96208026fde914701001a668716e",
+        "digest": "88a57b4eb65c7da430b44a3a1c5409e37ee87db429539cfe79251aaa0422f666",
         "systems": [
             "linux"
         ],
@@ -87,7 +87,7 @@ dependencyExport {
         "name": "org.openjfx:javafx-base:21.0.1:linux-aarch64",
         "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/21.0.1/javafx-base-21.0.1-linux-aarch64.jar",
         "size": 754326,
-        "digest": "e8d960421a991229e373a417a1202da19b1782d8",
+        "digest": "16f01b399c84cb439ca3a7f2f24a2e0bc768de49f94e45862eb8e8578315ccfe",
         "systems": [
             "linux"
         ],
@@ -99,7 +99,7 @@ dependencyExport {
         "name": "org.openjfx:javafx-base:21.0.1:mac",
         "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/21.0.1/javafx-base-21.0.1-mac.jar",
         "size": 754326,
-        "digest": "a2fdc6292a7727a389dc41d42dd1a86040ee7625",
+        "digest": "830b7882d3d8d46270e1a1ddc94d464f2b63a2cefa2e92d968433f590f6d0c9e",
         "systems": [
             "macos"
         ],
@@ -111,7 +111,7 @@ dependencyExport {
         "name": "org.openjfx:javafx-base:21.0.1:mac-aarch64",
         "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/21.0.1/javafx-base-21.0.1-mac-aarch64.jar",
         "size": 754326,
-        "digest": "d9e58df4eb0c61e90165665c404d2f51ea39408b",
+        "digest": "fede71174732edae1fb3f794a05e856a13b63be097a1f354e54f1a302ead810f",
         "systems": [
             "macos"
         ],
@@ -123,7 +123,7 @@ dependencyExport {
         "name": "org.openjfx:javafx-base:21.0.1:win",
         "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/21.0.1/javafx-base-21.0.1-win.jar",
         "size": 754326,
-        "digest": "0adb6ee2aa7dff77286a0673dd0c001e318e7224",
+        "digest": "0a46d1c7c69e177b937612574647eb54a31c6498cba6ee5ea20a0e8c2d4c2444",
         "systems": [
             "windows"
         ],
